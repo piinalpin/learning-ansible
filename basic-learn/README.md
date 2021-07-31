@@ -185,10 +185,20 @@ An Ansible playbook is an organized unit of scripts that defines work for a serv
         state: latest
 ```
 
-That `yaml` file means.
-    - Playbook have a `PLAY` with name `iloveansible`
-    - Running at host `server1` and become a `root` access
-    - Run tasks `Ensure nano is there` will running command `sudo yum install nano`
+That `yaml` file means :
+- Playbook have a `PLAY` with name `iloveansible`
+- Running at host `server1` and become a `root` access
+- Run tasks `Ensure nano is there` will running command `sudo yum install nano`
+
+So, the structure directory should be like below.
+
+```
+learn-ansible/
+└───inventory/
+│   │   vagrant.hosts
+└───Vagrantfile
+└───ansible-playbook.yml
+```
 
 Running playbook by typing `ansible-playbook -i inventory/vagrant.hosts ansible-playbook.yml ` on terminal.
 
