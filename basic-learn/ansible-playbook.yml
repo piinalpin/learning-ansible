@@ -1,0 +1,9 @@
+---
+- name: iloveansible
+  hosts: linux
+  become: yes
+  tasks:
+    - name: Ensure nano is there
+      yum:
+        name: nano
+        state: latest
