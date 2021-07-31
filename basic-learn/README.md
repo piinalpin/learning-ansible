@@ -1,6 +1,6 @@
 ### Overview
 
-![Ansible](/images/ansible.png)
+![Ansible](images/ansible.png)
 
 Ansible is a radically simple IT automation engine that automates cloud provisioning, configuration management, application deployment, intra-service orchestration, and many other IT needs.
 
@@ -32,7 +32,7 @@ brew install vagrant
 
 Open `virtualbox` and go to `File->Host Network Adapter` and setup private network.
 
-![Host Only Adapter](/images/host-only-adapter.png)
+![Host Only Adapter](images/host-only-adapter.png)
 
 **Installing Ansible**
 
