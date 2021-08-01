@@ -368,3 +368,21 @@ pipeline {
   }
 }
 ```
+
+### References
+
+[Jenkins.io](https://www.jenkins.io/doc/) - Jenkins User Documentation
+
+[CloudBeesTV](https://www.youtube.com/watch?v=g7CnQnDQwuU) - How To Install Jenkins on CentOS 7
+
+[RedHat](https://www.redhat.com/en/blog/continuous-delivery-jboss-eap-and-openshift-cloudbees-jenkins-platform) - Continuous Delivery to JBoss EAP and OpenShift with the CloudBees Jenkins Platform
+
+[CloudBees](https://support.cloudbees.com/hc/en-us/articles/222446987-Prepare-Jenkins-for-Support) - Prepare Jenkins for Support
+
+[Jenkins](https://pkg.jenkins.io/redhat-stable/) - Jenkins Redhat Packages
+
+[Docker](https://docs.docker.com/engine/install/centos/) - Install Docker Engine on CentOS
+
+[Docker](https://docs.docker.com/engine/install/linux-postinstall/) - Post-installation steps for Linux
+
+[AdoptOpenJDK](https://adoptopenjdk.net/installation.html#linux-pkg) - Installation
