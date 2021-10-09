@@ -1,0 +1,28 @@
+Vagrant.configure(2) do |config|
+  config.vm.box = "bento/centos-7"
+
+  config.vm.define "jenkins" do |jenkins|
+    jenkins.vm.network "private_network", ip: "192.168.0.1", name: 'vboxnet0'
+    jenkins.vm.hostname = "jenkins.local"
+    jenkins.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", disabled: true
+    jenkins.vm.network :forwarded_port, guest: 22, host: 2230, auto_correct: true
+    jenkins.vm.network :forwarded_port, guest: 8080, host: 8080, auto_correct: true
+    jenkins.ssh.port = 2230
+    jenkins.vm.provider "jenkins" do |vb|
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+  end
+
+  config.vm.define "agent" do |agent|
+    agent.vm.network "private_network", ip: "192.168.1.1", name: 'vboxnet1'
+    agent.vm.hostname = "agent.local"
+    agent.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", disabled: true
+    agent.vm.network :forwarded_port, guest: 22, host: 2231, auto_correct: true
+    agent.ssh.port = 2231
+    agent.vm.provider "agent" do |vb|
+      vb.cpus = 1
+      vb.memory = 1024
+    end
+  end
+end
