@@ -26,3 +26,61 @@
           - adoptopenjdk-11-hotspot
           - git
         state: latest
+- name: Jenkins installation
+  hosts: jenkins_controller
+  become: yes
+  tasks:
+    - name: Enable and start firewalld service
+      systemd:
+        name: firewalld
+        state: started
+        enabled: yes
+    - name: Permit traffic in default zone on port 8080/tcp
+      ansible.posix.firewalld:
+        port: 8080/tcp
+        permanent: yes
+        state: enabled
+        immediate: yes
+    - name: Add jenkins yum repository
+      yum_repository:
+        name: jenkins
+        description: Jenkins-stable
+        baseurl: https://pkg.jenkins.io/redhat-stable/
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+    - name: Install jenkins
+      yum:
+        name:
+          - jenkins-2.277.4
+        state: latest
+    - name: Create directory for jenkins
+      file:
+        path: '{{ item }}'
+        state: directory
+        owner: jenkins
+        group: jenkins
+        recurse: yes
+      with_items:
+        - '/var/cache/jenkins/tmp'
+        - '/var/cache/jenkins/heapdumps'
+    - name: Update JENKINS_JAVA_OPTIONS
+      lineinfile:
+        path: '/etc/sysconfig/jenkins'
+        regexp: '.*-Djava.awt.headless=true.*'
+        line: 'JENKINS_JAVA_OPTIONS="-Djava.awt.headless=true -Djava.io.tmpdir=/var/cache/jenkins/tmp -Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Jakarta -Duser.timezone=Asia/Jakarta"'
+        state: present
+    - name: Update JENKINS_ARGS
+      lineinfile:
+        path: '/etc/sysconfig/jenkins'
+        regexp: '.*JENKINS_ARGS=.*'
+        line: 'JENKINS_ARGS="--pluginroot=/var/cache/jenkins/plugins"'
+        state: present
+    - name: Create limits file
+      copy:
+        dest: '/etc/security/limits.d/30-jenkins.conf'
+        src: '30-jenkins.conf'
+    - name: Start jenkins service
+      systemd:
+        name: jenkins
+        state: started
