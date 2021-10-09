@@ -1,0 +1,28 @@
+- name: Install base software on all inventory
+  hosts: all
+  gather_facts: yes
+  become: yes
+  tasks:
+    - name: Update hosts
+      lineinfile:
+        path: "/etc/hosts"
+        regexp: ".*\t{{ hostvars[item]['ansible_hostname']}}\t{{ hostvars[item]['ansible_hostname']}}"
+        line: "{{ hostvars[item]['ansible_ssh_host'] }}\t{{ hostvars[item]['ansible_hostname']}}\t{{ hostvars[item]['ansible_hostname']}}"
+        state: present
+        backup: yes
+      with_items: "{{ ansible_play_batch }}"
+    - name: AdoptOpenJDK yum repository
+      yum_repository:
+        name: AdoptOpenJDK
+        description: AdoptOpenJDK
+        baseurl: http://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/centos/$releasever/$basearch
+        enabled: yes
+        gpgcheck: yes
+        gpgkey: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+    - name: Install fontconfig, AdoptOpenJDK and git
+      yum:
+        name:
+          - fontconfig
+          - adoptopenjdk-11-hotspot
+          - git
+        state: latest
