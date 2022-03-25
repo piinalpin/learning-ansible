@@ -1,0 +1,20 @@
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'libvirt'
+
+Vagrant.configure(2) do |config|
+    config.vm.box = "centos/7"
+    
+    config.vm.provider :lxc do |lxc|
+        lxc.customize 'cgroup.memory.limit_in_bytes', '512M'
+        lxc.backingstore = 'dir'
+        lxc.customize 'aa_allow_incomplete', 1
+    end
+  
+    config.vm.define "server1" do |server1|
+      server1.vm.network "private_network", ip: "192.168.121.2", name: 'vnet0'
+      server1.vm.hostname = "server1.local"
+      server1.vm.provider "server1" do |vb|
+        vb.cpus = 1
+        vb.memory = 1024
+      end
+    end
+  end
