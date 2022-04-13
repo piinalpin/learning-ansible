@@ -1,0 +1,11 @@
+[all:vars]
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+postgres_constainer_name=postgres
+postgres_image_name=postgres:14.2-alpine
+postgres_publish_port=5432
+postgres_db_password=SevenEightTwo782
+postgres_db_name=my_db
+default_docker_network=my_network
+
+[jenkins_controller]
+server ansible_ssh_host=192.168.0.1 ansible_ssh_port=2230 ansible_user=vagrant ansible_ssh_private_key_file=.vagrant/machines/jenkins/virtualbox/private_key
