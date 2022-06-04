@@ -6,4 +6,8 @@
     - name: Ensure nano is there
       yum:
         name: nano
+        state: absent
+    - name: Ensure curl is there
+      yum:
+        name: curl
         state: latest
